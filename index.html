@@ -3,88 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realidad Aumentada con AR.js</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100vh;
-        }
-
-        a-scene {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Ajustamos el tamaño de las imágenes y videos */
-        a-image, a-video {
-            max-width: 100%;
-            height: auto;
-            display: none; /* Ocultamos el video inicialmente */
-        }
-
-        #video {
-            display: none; /* También ocultamos el video al principio */
-        }
-    </style>
-
-    <!-- Scripts necesarios para AR.js y A-Frame -->
+    <title>Realidad Aumentada</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body>
-    <!-- Contenedor para la cámara y AR -->
+    <!-- Logo en la pantalla -->
+    <img src="yoo.png" id="logo" alt="Logo" />
+
+    <!-- Escena de A-Frame para la Realidad Aumentada -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
 
-        <!-- Definir marcador de imagen con su patrón (cargar patrón .patt) -->
+        <!-- Marcador que detecta la imagen y muestra el video cuando se encuentra -->
         <a-marker type="pattern" url="pattern-Sarita.patt" id="marcador">
-            <!-- Imagen superpuesta sobre el marcador -->
-            <a-image src="Sarita.png" position="0 0.5 0" width="2" height="2"></a-image>
-
-            <!-- Video que solo se reproduce cuando el marcador es detectado -->
+            <a-image src="sarita.png" position="0 0.5 0" width="2" height="2"></a-image>
             <a-video id="video" src="Animatic_Martha.mp4" position="0 0.5 0" width="2" height="1.5" autoplay="false"></a-video>
         </a-marker>
 
-        <!-- Cámara con ajustes para evitar zoom -->
-        <a-entity camera position="0 0 4" fov="70"></a-entity>
+        <!-- Cámara de la escena AR -->
+        <a-entity camera></a-entity>
+
     </a-scene>
 
-    <script>
-        // Obtener el video y marcador
-        var video = document.getElementById('video');
-        var marcador = document.getElementById('marcador');
-
-        // Verificar si los elementos se cargaron correctamente
-        if (!video) {
-            console.error('No se pudo encontrar el elemento de video');
-        }
-        if (!marcador) {
-            console.error('No se pudo encontrar el marcador');
-        }
-
-        // Reproducir el video cuando el marcador es detectado
-        if (marcador) {
-            marcador.addEventListener('markerFound', function() {
-                // Mostramos el video y lo reproducimos
-                if (video) {
-                    video.style.display = 'block'; // Hacemos visible el video
-                    if (video.paused) {
-                        video.play();
-                    }
-                }
-            });
-
-            // Detener el video cuando el marcador desaparece
-            marcador.addEventListener('markerLost', function() {
-                // Pausamos el video y lo ocultamos
-                if (video) {
-                    video.pause();
-                    video.currentTime = 0;  // Reinicia el video cuando se pierde el marcador
-                    video.style.display = 'none'; // Ocultamos el video
-                }
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
