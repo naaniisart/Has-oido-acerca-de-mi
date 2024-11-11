@@ -60,4 +60,12 @@
 
         // Detener el video cuando el marcador desaparece
         marcador.addEventListener('markerLost', function() {
-            // Pausa
+            // Pausamos el video
+            if (!video.paused) {
+                video.pause();
+                video.currentTime = 0;  // Reemplaza el video al perderse el marcador
+            }
+        });
+    </script>
+</body>
+</html>

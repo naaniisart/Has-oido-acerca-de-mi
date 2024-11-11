@@ -1,15 +1,32 @@
-// Asegúrate de que el marcador sea accesible al cargar el DOM
-window.onload = function() {
+<script>
+    // Obtener el video y marcador
+    var video = document.getElementById('video');
     var marcador = document.getElementById('marcador');
-    
-    // Si tienes alguna animación con GSAP, puede ir aquí
+
+    // Verificar si los elementos se cargaron correctamente
+    if (!video) {
+        console.error('No se pudo encontrar el elemento de video');
+    }
+    if (!marcador) {
+        console.error('No se pudo encontrar el marcador');
+    }
+
+    // Reproducir el video cuando el marcador es detectado
     if (marcador) {
-        // Ejemplo de animación usando GSAP en el marcador
-        gsap.from(marcador, {
-            duration: 2,
-            scale: 0.5,
-            opacity: 0,
-            ease: "bounce"
+        marcador.addEventListener('markerFound', function() {
+            // Comprobamos que el video esté listo para reproducirse
+            if (video && video.paused) {
+                video.play();
+            }
+        });
+
+        // Detener el video cuando el marcador desaparece
+        marcador.addEventListener('markerLost', function() {
+            // Pausamos el video
+            if (video && !video.paused) {
+                video.pause();
+                video.currentTime = 0;  // Reinicia el video cuando se pierde el marcador
+            }
         });
     }
-};
+</script>
