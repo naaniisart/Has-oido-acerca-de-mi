@@ -4,7 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realidad Aumentada con AR.js</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Aseguramos que el body ocupe toda la pantalla y no haya márgenes extra */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Esto asegura que la escena de AR ocupe toda la pantalla */
+        a-scene {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Hacemos que la imagen y el video se ajusten de manera adecuada para móviles */
+        a-image, a-video {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
     
     <!-- Scripts para AR.js y A-Frame -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
@@ -20,7 +40,7 @@
             <!-- Superponer una imagen sobre el marcador -->
             <a-image src="Sarita.png" position="0 0.5 0" width="2" height="2"></a-image>
             
-            <!-- Video sin autoplay, se controlará con eventos -->
+            <!-- Video sin autoplay, controlado con eventos -->
             <a-video id="video" src="Animatic_Martha.mp4" position="0 0.5 0" width="2" height="1.5" autoplay="false"></a-video>
         </a-marker>
 
