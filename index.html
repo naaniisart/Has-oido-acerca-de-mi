@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realidad Aumentada con AR.js</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Mover los scripts aquí antes de <a-scene> -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+</head>
+<body>
+    <!-- Contenedor para la cámara y RA -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        
+        <!-- Definir marcador de imagen con su patrón (debe ser un archivo de imagen en .patt) -->
+        <a-marker type="pattern" url="pattern-Sarita.patt" id="marcador">
+            <!-- Superponer una imagen o video en 2D sobre el marcador -->
+            <a-image src="Sarita.png" position="0 0.5 0" width="2" height="2"></a-image>
+            <!-- Si prefieres un video -->
+            <a-video src="Animatic_Martha.mp4" position="0 0.5 0" width="2" height="1.5"></a-video>
+        </a-marker>
+        
+        <!-- Cámara que captura el entorno -->
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <!-- Incluir el archivo de JavaScript que tiene la lógica de animación -->
+    <script src="script.js"></script>
+</body>
+</html>

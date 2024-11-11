@@ -1,0 +1,25 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#container {
+    position: relative;
+}
+
+#marcador {
+    width: 300px;
+    cursor: pointer;
+}
+
+#animacion {
+    display: none; /* Oculto por defecto */
+    width: 300px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
