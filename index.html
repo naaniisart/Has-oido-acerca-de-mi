@@ -13,7 +13,6 @@
 
     <!-- Escena de A-Frame para la Realidad Aumentada -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-
         <!-- Marcador que detecta la imagen y muestra el video cuando se encuentra -->
         <a-marker type="pattern" url="pattern-Sarita.patt" id="marcador">
             <a-image src="sarita.png" position="0 0.5 0" width="2" height="2"></a-image>
@@ -22,9 +21,29 @@
 
         <!-- Cámara de la escena AR -->
         <a-entity camera></a-entity>
-
     </a-scene>
 
-    <script src="script.js"></script>
+    <script>
+        // Espera a que el DOM esté completamente cargado
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.querySelector("#video");
+            const marker = document.querySelector("#marcador");
+
+            // Pausa el video al cargar la página
+            video.pause();
+            
+            // Detecta cuando el marcador se ve y muestra el video
+            marker.addEventListener("markerFound", () => {
+                video.setAttribute("visible", "true");
+                video.play();
+            });
+
+            // Cuando el marcador deja de ser visible, pausa el video
+            marker.addEventListener("markerLost", () => {
+                video.pause();
+                video.setAttribute("visible", "false");
+            });
+        });
+    </script>
 </body>
 </html>
