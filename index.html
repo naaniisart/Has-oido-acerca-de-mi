@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realidad Aumentada con AR.js</title>
     <style>
-        /* Aseguramos que el body ocupe toda la pantalla y no haya márgenes extra */
         body {
             margin: 0;
             padding: 0;
@@ -13,58 +12,52 @@
             height: 100vh;
         }
 
-        /* Esto asegura que la escena de AR ocupe toda la pantalla */
         a-scene {
             width: 100%;
             height: 100%;
         }
 
-        /* Hacemos que la imagen y el video se ajusten de manera adecuada para móviles */
+        /* Ajustamos el tamaño de las imágenes y videos */
         a-image, a-video {
             max-width: 100%;
             height: auto;
         }
     </style>
-    
-    <!-- Scripts para AR.js y A-Frame -->
+
+    <!-- Scripts necesarios para AR.js y A-Frame -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
 </head>
 <body>
     <!-- Contenedor para la cámara y AR -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
 
-        <!-- Definir el marcador con su patrón -->
+        <!-- Definir marcador de imagen con su patrón (cargar patrón .patt) -->
         <a-marker type="pattern" url="pattern-Sarita.patt" id="marcador">
-            <!-- Superponer una imagen sobre el marcador -->
+            <!-- Imagen superpuesta sobre el marcador -->
             <a-image src="Sarita.png" position="0 0.5 0" width="2" height="2"></a-image>
-            
-            <!-- Video sin autoplay, controlado con eventos -->
+
+            <!-- Video que solo se reproduce cuando el marcador es detectado -->
             <a-video id="video" src="Animatic_Martha.mp4" position="0 0.5 0" width="2" height="1.5" autoplay="false"></a-video>
         </a-marker>
 
-        <!-- Cámara con fov ajustado para evitar zoom -->
+        <!-- Cámara con ajustes para evitar zoom -->
         <a-entity camera position="0 0 4" fov="70"></a-entity>
     </a-scene>
 
-    <!-- Incluir JavaScript para controlar la lógica de AR -->
     <script>
-        // Obtener el video y el marcador
+        // Obtener el video y marcador
         var video = document.getElementById('video');
         var marcador = document.getElementById('marcador');
 
-        // Escuchar cuando el marcador es detectado y reproducir el video
+        // Reproducir el video cuando el marcador es detectado
         marcador.addEventListener('markerFound', function() {
-            // Asegurarse de que el video esté completamente cargado antes de reproducirlo
-            video.play();
+            // Comprobamos que el video esté listo para reproducirse
+            if (video.paused) {
+                video.play();
+            }
         });
 
-        // Escuchar cuando el marcador es perdido y pausar el video
+        // Detener el video cuando el marcador desaparece
         marcador.addEventListener('markerLost', function() {
-            video.pause();  // Pausar el video cuando el marcador es perdido
-            video.currentTime = 0;  // Reiniciar el video al principio
-        });
-    </script>
-</body>
-</html>
+            // Pausa
